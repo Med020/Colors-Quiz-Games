@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ quiz.title }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'quiz/css/quiz_detail_style.css'%}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'quiz/css/navbarstyle.css' %}">
+
+</head>
+<body>
+    {% include 'quiz/navbar.html' %}
+    <div class="container"> 
+        <h1>{{ quiz.title }}</h1>
+        <p class="description">{{ quiz.description }}</p>
+        <form method="post" >
+            {% csrf_token %}
+            {% for question in questions %}
+                <p class="question">{{ question.text }}</p>
+                {% if question.type == 'multiple_choice' %}
+                    <div class="radio-buttons">
+                        {% for choice in question.choice_set.all %}
+                            <label class="radio-button">
+                                <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">
+                                <div class="radio-circle"></div>
+                                <span class="radio-label">{{ choice.text }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if question.type == 'true_false' %}
+                    <label class="radio-button"><input type="radio" name="question_{{ question.id }}" value="true"><div class="radio-circle"></div><span class="radio-label">True</span></label>
+                    <label class="radio-button"><input type="radio" name="question_{{ question.id }}" value="false"><div class="radio-circle"></div><span class="radio-label">False</span></label>
+                {% endif %}
+                {% if question.type == 'text' %}
+                    <input type="text" name="question_{{ question.id }}"><br>
+                {% endif %}
+            {% endfor %}
+            <button class="submit-btn" type="submit">Submit</button>
+        </form>
+    </div>
+    
+</body>
+</html>

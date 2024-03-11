@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'quiz/css/sign-up.css' %}">
+    <title>Sign Up</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="logo-container">
+            <h1>Colors Quiz Games</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="heading">Sign Up</div>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% if messages %}
+                <ul class="error-msg">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <input required class="input" type="text" name="username" id="username" placeholder="Username">
+            <input required class="input" type="password" name="password1" id="password1" placeholder="Password">
+            <input required class="input" type="password" name="password2" id="password2" placeholder="Confirm Password">
+            <span class="forgot-password"><a href="login">Already have an account?</a></span>
+            <input class="sign-up-button" type="submit" value="Sign Up">
+        </form>
+        <span class="agreement"><a href="#">Learn user licence agreement</a></span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Index</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'quiz/css/quiz_index_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'quiz/css/navbarstyle.css' %}">
+</head>
+<body>
+    {% include 'quiz/navbar.html' %}
+    <div class="container">
+        <h1>Available Quizzes :</h1>
+            <ul>
+                {% for quiz in quizzes %}
+                    <li id="quiz-card"><a href="{% url 'quiz_detail_view' quiz.id %}">{{ quiz.title }}</a></li>
+                {% endfor %}
+            </ul>
+    </div>
+</body>
+</html>
